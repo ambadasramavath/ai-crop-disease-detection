@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Detect a Crop Disease · CropCare AI{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="eyebrow">AI-POWERED PLANT HEALTH</div>
+  <h1>Healthier crops<br><span>start with a leaf.</span></h1>
+  <p class="hero-copy">Upload a clear leaf photo to screen for possible crop diseases and explore educational prevention guidance.</p>
+  <div class="trust-row"><span>✓ Image screening</span><span>✓ Confidence warnings</span><span>✓ Prediction history</span></div>
+</section>
+<section class="upload-card">
+  <div class="section-heading"><div><div class="eyebrow">START A CHECK</div><h2>Upload a leaf image</h2></div><span class="step">01 / 01</span></div>
+  <form method="post" enctype="multipart/form-data" id="upload-form">
+    <label class="drop-zone" for="leaf_image" id="drop-zone">
+      <div class="upload-symbol">↑</div>
+      <strong id="file-label">Choose an image or drag it here</strong>
+      <span>JPG, PNG or WEBP · Up to 8 MB</span>
+      <input type="file" id="leaf_image" name="leaf_image" accept=".jpg,.jpeg,.png,.webp,image/*" required>
+      <img id="preview" alt="Selected leaf preview" hidden>
+    </label>
+    <button class="button primary full" type="submit">Analyze leaf <span>→</span></button>
+  </form>
+  <p class="fine-print">For best results, use a sharp, well-lit photo with the leaf clearly visible. AI results are not a confirmed diagnosis.</p>
+</section>
+<section class="feature-grid">
+  <article class="feature"><span class="feature-icon">◎</span><h3>AI screening</h3><p>Model prediction with a confidence score and alternative classes.</p></article>
+  <article class="feature"><span class="feature-icon">⌁</span><h3>Practical learning</h3><p>Educational prevention tips and guidance to seek expert confirmation.</p></article>
+  <article class="feature"><span class="feature-icon">▤</span><h3>Saved history</h3><p>Review recent predictions and uncertain results in your dashboard.</p></article>
+</section>
+{% endblock %}

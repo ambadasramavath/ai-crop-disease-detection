@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Dashboard · CropCare AI{% endblock %}
+{% block content %}
+<div class="page-head"><div class="eyebrow">YOUR ACTIVITY</div><h1>Prediction dashboard</h1><p>A history of leaf screenings made in this application.</p></div>
+<section class="stats-grid">
+  <article class="stat-card"><span>Total predictions</span><strong>{{ total }}</strong><small>All saved screenings</small></article>
+  <article class="stat-card"><span>Uncertain results</span><strong>{{ uncertain }}</strong><small>Low-confidence warnings</small></article>
+  <article class="stat-card"><span>Recent records</span><strong>{{ rows|length }}</strong><small>Latest 100 predictions</small></article>
+</section>
+<section class="panel table-panel"><div class="section-heading"><div><div class="eyebrow">RECENT ACTIVITY</div><h2>Prediction history</h2></div><a class="text-link" href="{{ url_for('index') }}">+ New analysis</a></div>
+{% if rows %}
+<div class="table-wrap"><table><thead><tr><th>Image</th><th>Prediction</th><th>Confidence</th><th>Date</th><th>Status</th><th></th></tr></thead><tbody>
+{% for row in rows %}
+<tr><td><img class="thumb" src="{{ url_for('static', filename='uploads/' ~ row['filename']) }}" alt="Leaf"></td><td>{{ row['predicted_class'].replace('___', ' — ').replace('_', ' ') }}</td><td>{{ "%.1f"|format(row['confidence'] * 100) }}%</td><td>{{ row['created_at'] }}</td><td>{% if row['warning'] %}<span class="pill warning-pill">Uncertain</span>{% else %}<span class="pill">Review</span>{% endif %}</td><td><a href="{{ url_for('history_detail', record_id=row['id']) }}">View</a></td></tr>
+{% endfor %}
+</tbody></table></div>
+{% else %}
+<div class="empty-state"><div class="upload-symbol">▤</div><h3>No predictions yet</h3><p>Upload your first leaf image to begin building your history.</p><a class="button primary" href="{{ url_for('index') }}">Start an analysis</a></div>
+{% endif %}
+</section>
+{% endblock %}

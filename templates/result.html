@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Prediction Result · CropCare AI{% endblock %}
+{% block content %}
+<div class="page-head"><div class="eyebrow">ANALYSIS COMPLETE</div><h1>Leaf screening result</h1><p>Use this as an initial clue, not a definitive diagnosis.</p></div>
+<section class="result-layout">
+  <article class="panel image-panel"><img class="result-image" src="{{ image_url }}" alt="Uploaded crop leaf"><div class="image-caption">Uploaded image</div></article>
+  <article class="panel prediction-panel">
+    <div class="eyebrow">TOP PREDICTION</div>
+    <h2 class="prediction-name">{{ prediction.label.replace('___', ' — ').replace('_', ' ') }}</h2>
+    <div class="confidence-line"><span>Model confidence</span><strong>{{ "%.1f"|format(prediction.confidence * 100) }}%</strong></div>
+    <div class="meter"><span style="width: {{ (prediction.confidence * 100)|round(1) }}%"></span></div>
+    {% if warning %}<div class="notice warning"><strong>Uncertain result</strong><br>{{ warning }}</div>{% else %}<div class="notice info">Confidence is a model score, not a guarantee that the prediction is correct.</div>{% endif %}
+    {% if alternatives %}<h3>Other possible classes</h3><ul class="alternatives">{% for item in alternatives %}<li><span>{{ item.label.replace('___', ' — ').replace('_', ' ') }}</span><strong>{{ "%.1f"|format(item.confidence * 100) }}%</strong></li>{% endfor %}</ul>{% endif %}
+  </article>
+</section>
+<section class="panel advice-panel"><div class="eyebrow">EDUCATIONAL ADVISORY</div><h2>What to do next</h2><p>{{ advisory.summary }}</p><div class="advice-columns"><div><h3>Prevention</h3><p>{{ advisory.prevention }}</p></div><div><h3>Management guidance</h3><p>{{ advisory.treatment }}</p></div></div><p class="fine-print">Recommendations are general educational information and may not fit every crop, region, or disease strain. Confirm with a local agricultural extension officer before treatment.</p></section>
+<div class="actions"><a class="button primary" href="{{ url_for('index') }}">Analyze another image →</a><a class="button secondary" href="{{ url_for('history_detail', record_id=record_id) }}">View saved record</a></div>
+{% endblock %}

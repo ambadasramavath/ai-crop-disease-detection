@@ -1,0 +1,11 @@
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+.env
+dataset/
+model/*.keras
+static/uploads/*
+!static/uploads/.gitkeep
+database/*.db
+.DS_Store

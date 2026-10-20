@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Saved Prediction · CropCare AI{% endblock %}
+{% block content %}
+<div class="page-head"><div class="eyebrow">SAVED RECORD #{{ row['id'] }}</div><h1>Prediction details</h1><p>{{ row['created_at'] }}</p></div>
+<section class="panel detail-panel">
+  <div><div class="eyebrow">PREDICTED CLASS</div><h2>{{ row['predicted_class'].replace('___', ' — ').replace('_', ' ') }}</h2><p>Confidence: <strong>{{ "%.1f"|format(row['confidence'] * 100) }}%</strong></p>
+  {% if row['warning'] %}<div class="notice warning">{{ row['warning'] }}</div>{% else %}<div class="notice info">A missing warning does not guarantee the prediction is correct.</div>{% endif %}
+  <p class="fine-print">Filename: {{ row['filename'] }}</p></div>
+</section>
+<div class="actions"><a class="button primary" href="{{ url_for('dashboard') }}">← Back to dashboard</a><a class="button secondary" href="{{ url_for('index') }}">New analysis</a></div>
+{% endblock %}
